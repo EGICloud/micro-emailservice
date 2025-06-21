@@ -1,25 +1,25 @@
-name: Build and Push EmailService Image
+name: Build and Push EmailService
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clonar repo
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Configurar Docker
-        uses: docker/setup-buildx-action@v2
+    - name: Login to DockerHub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Construir imagen emailservice
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/emailservice:latest .
-
-      - name: Login a Docker Hub
-        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-
-      - name: Subir imagen a Docker Hub
-        run: docker push tomasbeltran/egi_cloud:latest
+    - name: Build and push image
+      run: |
+        docker build -t tomasbeltran/emailservice:latest .
+        docker push tomasbeltran/emailservice:latest
