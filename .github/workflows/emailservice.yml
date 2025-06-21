@@ -19,7 +19,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/micro-emailservice:latest .
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}tomasbeltran/egi_cloud:tagname .
 
       - name: Push image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/micro-emailservice:latest
+        run: docker push ${{ secrets.DOCKER_USERNAME }}tomasbeltran/egi_cloud:tagname
